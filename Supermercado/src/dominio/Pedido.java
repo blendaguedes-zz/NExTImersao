@@ -1,14 +1,17 @@
-package dados;
+package dominio;
+
+import java.util.ArrayList;
+
 public class Pedido {
     
-    private Item[] item;
+    private ArrayList<Item> item;
     private String tipoPagamento;
 
-    public Item[] getItem() {
+    public ArrayList<Item> getItem() {
         return this.item;
     }
 
-    public void setItem(Item[] item) {
+    public void setItem(ArrayList<Item> item) {
         this.item = item;
     }
 

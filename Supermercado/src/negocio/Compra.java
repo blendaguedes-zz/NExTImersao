@@ -3,11 +3,13 @@ package negocio;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import javax.swing.text.StyledEditorKit.BoldAction;
+import dominio.Item;
+import dominio.Pedido;
+import dominio.Produto;
 
-import dados.Item;
-import dados.Pedido;
-import dados.Produto;
+
+// cliente (programadora) diz qual o pedido
+// SE um dos itens não está disponível ENTÃO não é possível concluir compra
 
 public class Compra {
 
@@ -21,7 +23,7 @@ public class Compra {
         produtoLeite.setDescricao("Leite em pó");
         produtoLeite.setValor(5.0);
         // set quantidade de estoque para exemplo
-        produtoLeite.setQuantidadeEstoque(1);
+        produtoLeite.setQuantidadeEstoque(2);
 
         // produto Coca
         produtoCoca.setDescricao("Coca-cola 2L");
@@ -42,18 +44,23 @@ public class Compra {
 
         // Adicionando uma lista de itens
         Item[] arrayItens = new Item[2];
+        ArrayList<Item> arrListItens = new ArrayList<>();
+
         arrayItens[0] = item1;
+        arrListItens.add(item1);
+
         arrayItens[1] = item2;
+        arrListItens.add(item2);
 
         // Verifica o se todos os itens estão no estoque
         // A regra de negócio diz: Se algum dos itens não estiver no estoque a compra não pode ser concluída.
-        boolean podeComprar = verificarListaEstoque(arrayItens);        
+        boolean podeComprar = verificarListaEstoque(arrListItens);        
 
         // Se está tudo OK com os itens do pedido então ele é concluído
         if (podeComprar) {
             Pedido pedido = new Pedido();
 
-            pedido.setItem(arrayItens);
+            pedido.setItem(arrListItens);
                 
             // Calcula o total do pedido
             double totalPedido = calcularCompra(pedido);
@@ -81,7 +88,7 @@ public class Compra {
     // Método que calcula o valor total da compra
     public static double calcularCompra(Pedido pedido) {
 
-        Item[] listaCompras = pedido.getItem();
+        ArrayList<Item> listaCompras = pedido.getItem();
         double totalCompra = 0.0;
 
         for (Item item : listaCompras) {
@@ -104,8 +111,9 @@ public class Compra {
     }
 
     // Verificando todos os itens, se um estiver fora de estoque o método já retorna falso
-    public static boolean verificarListaEstoque(Item[] itens){
+    public static boolean verificarListaEstoque(ArrayList<Item> itens){
         boolean podeComprar = true;
+        
         for (Item item : itens) {
             if(verificarEstoque(item) == false){
                 podeComprar = false;
@@ -117,5 +125,28 @@ public class Compra {
 
     public static void main(String[] args) {
         fazerCompra();
+        
+        // ArrayList itens = new ArrayList<>();
+        // itens.add("aksdjfh");
+        // itens.add(1231);
+
+        // ArrayList<Item> itens2 = new ArrayList<>();
+        
+        // // itens2.add(38274);
+
+        // Item item = new Item();
+        // itens2.add(item);
+
+
+        // ArrayList<String> arrString = new ArrayList<>();
+
+        // arrString.add("Nome de alguém");
+        // arrString.add("Carros"); // adicionar item
+        // arrString.get(0); // pegar item de indice específico
+
+        // for (String palavra : arrString) {
+        //    System.out.println(palavra);
+        // }
+        // System.out.println(arrString.get(1));
     }
 }

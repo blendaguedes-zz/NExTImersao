@@ -1,4 +1,4 @@
-package dados;
+package dominio;
 public class Item {
     
     private Produto produto;

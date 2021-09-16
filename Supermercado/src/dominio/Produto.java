@@ -1,4 +1,4 @@
-package dados;
+package dominio;
 public class Produto{
 
     private final int codigo;
