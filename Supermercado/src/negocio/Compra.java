@@ -1,53 +1,120 @@
 package negocio;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+import javax.swing.text.StyledEditorKit.BoldAction;
+
 import dados.Item;
 import dados.Pedido;
 import dados.Produto;
 
 public class Compra {
-    
-    public static void fazerCompra(){
 
-        Pedido pedido = new Pedido();
-
-        //comprando 2 pacotes de leite
-        // 1 coca cola        
+    public static void fazerCompra() {
+        // comprando 2 pacotes de leite
+        // 1 coca cola
         Produto produtoLeite = new Produto(01);
         Produto produtoCoca = new Produto(02);
 
         // produto Leite
         produtoLeite.setDescricao("Leite em pó");
         produtoLeite.setValor(5.0);
-        //set quantidade de estoque para exemplo
+        // set quantidade de estoque para exemplo
         produtoLeite.setQuantidadeEstoque(1);
 
         // produto Coca
         produtoCoca.setDescricao("Coca-cola 2L");
         produtoCoca.setValor(6.0);
-        //set quantidade de estoque para exemplo
-        produtoCoca.setQuantidadeEstoque(5);         
+        // set quantidade de estoque para exemplo
+        produtoCoca.setQuantidadeEstoque(5);
 
+
+        // Criando os itens
         Item item1 = new Item();
         Item item2 = new Item();
 
         item1.setProduto(produtoLeite);
-        item1.setQuantidadeItem(2);        
+        item1.setQuantidadeItem(2);
+
         item2.setProduto(produtoCoca);
         item2.setQuantidadeItem(1);
 
-        System.out.println("Se existir estoque disponível retornar 'true'" + temEstoque);
+        // Adicionando uma lista de itens
+        Item[] arrayItens = new Item[2];
+        arrayItens[0] = item1;
+        arrayItens[1] = item2;
 
-    }
+        // Verifica o se todos os itens estão no estoque
+        // A regra de negócio diz: Se algum dos itens não estiver no estoque a compra não pode ser concluída.
+        boolean podeComprar = verificarListaEstoque(arrayItens);        
 
-    public static boolean verificarEstoque(Item item){
-        boolean disponivel = false;        
+        // Se está tudo OK com os itens do pedido então ele é concluído
+        if (podeComprar) {
+            Pedido pedido = new Pedido();
 
-        if(item.getProduto().getQuantidadeEstoque()>=item.getQuantidadeItem()){
-            disponivel = true;
+            pedido.setItem(arrayItens);
+                
+            // Calcula o total do pedido
+            double totalPedido = calcularCompra(pedido);
+
+            System.out.println("O total do seu pedido é: " + totalPedido);
+            System.out.println("Digite a forma de pagamento: ");
+
+            // Pede que o usuário insira a forma de pagamento
+            Scanner sc = new Scanner(System.in);
+            String formaPagamento = sc.nextLine();
+            System.out.println("Compra executada com sucesso. Usando o método de pagamento " 
+                + formaPagamento + ".");
+            sc.close();
+
+        }else{
+            // Se um dos itens está faltoso então o pedido não pode ser concluído. 
+            System.out.println("No seu pedido, existem itens sem estoque. Volte mais tarde.");
         }
 
+    }
+
+    // para cada item
+    // quantidadeItem * produto.valor
+
+    // Método que calcula o valor total da compra
+    public static double calcularCompra(Pedido pedido) {
+
+        Item[] listaCompras = pedido.getItem();
+        double totalCompra = 0.0;
+
+        for (Item item : listaCompras) {
+            // através do item é possível pegar o Produto e assim o atributo 'valor'
+            double valorProduto = item.getProduto().getValor();
+            double quantidadeItem = item.getQuantidadeItem();
+
+            totalCompra = totalCompra + (valorProduto * quantidadeItem);
+        }
+        return totalCompra;
+    }
+
+    // Verificando se o item está disponível no estoque na quantidade que o cliente quer
+    public static boolean verificarEstoque(Item item) {
+        boolean disponivel = false;
+        if (item.getProduto().getQuantidadeEstoque() >= item.getQuantidadeItem()) {
+            disponivel = true;
+        }
         return disponivel;
     }
-    
+
+    // Verificando todos os itens, se um estiver fora de estoque o método já retorna falso
+    public static boolean verificarListaEstoque(Item[] itens){
+        boolean podeComprar = true;
+        for (Item item : itens) {
+            if(verificarEstoque(item) == false){
+                podeComprar = false;
+                break;
+            }            
+        }
+        return  podeComprar;
+    }
+
     public static void main(String[] args) {
         fazerCompra();
     }
