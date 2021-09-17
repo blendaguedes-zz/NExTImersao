@@ -3,9 +3,17 @@ package dominio;
 public class Pais {
 
     private String nome;
-    private int pupulacao;
+    private int populacao;
     private double dimensao;
     private Continente continente;
+
+    public Continente getContinente() {
+        return this.continente;
+    }
+
+    public void setContinente(Continente continente) {
+        this.continente = continente;
+    }
 
     public String getNome() {
         return this.nome;
@@ -15,12 +23,12 @@ public class Pais {
         this.nome = nome;
     }
 
-    public int getPupulacao() {
-        return this.pupulacao;
+    public int getPopulacao() {
+        return this.populacao;
     }
 
-    public void setPupulacao(int pupulacao) {
-        this.pupulacao = pupulacao;
+    public void setPopulacao(int populacao) {
+        this.populacao = populacao;
     }
 
     public double getDimensao() {
@@ -31,6 +39,4 @@ public class Pais {
         this.dimensao = dimensao;
     }
 
-
-    
 }

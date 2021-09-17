@@ -27,24 +27,97 @@ public class Continente{
        this.nome = nome;
     }
 
-    public static void adicionarPais(Pais pais){
-
-        Continente continente = new Continente("Ásia");       
+    public void adicionarPais(Pais pais){     
         
-        ArrayList<Pais> paisesList = new ArrayList<>();
-        continente.setPaises(paisesList);
+        if (this.getPaises() == null){
+            ArrayList<Pais> paisesList = new ArrayList<>();
+            this.setPaises(paisesList);
+        }
+        this.getPaises().add(pais);
+    }
 
-        continente.getPaises().add(pais);
+    public double dimensaoContinente(){
 
-        System.out.println(continente.getPaises().get(0));
-        System.out.println(continente.getNome());
-        
-        // System.out.println(continente.getPaises());
-        // continente.setPaises(paisesList);
+        double dimensaoContinente = 0.0;
+
+        for (Pais pais : this.getPaises()) {            
+            dimensaoContinente = dimensaoContinente + pais.getDimensao();
+        }
+
+        return dimensaoContinente;
+    }
+
+    public int populacaoContinente(){
+
+        int populacaoContinente = 0;
+
+        for (Pais pais : this.getPaises()) {            
+            populacaoContinente = populacaoContinente + pais.getPopulacao();
+        }
+        return populacaoContinente;
+    }
+
+    public double densidadePopulacional(){
+
+        int populacaoContinente = this.populacaoContinente();
+        double dimensaoContinente = this.dimensaoContinente();
+
+        double densidadePopulacional = populacaoContinente/dimensaoContinente;
+
+        return densidadePopulacional;
+    }
+
+    // Método de forma mais compacta
+    // public double densidadePopulacional(){
+
+    //     return this.populacaoContinente()/this.dimensaoContinente();
+
+    // }
+
+    public Pais paisMaiorPopulacao(){
+
+        if(this.getPaises() == null){
+            System.out.println("Este continente ainda não tem paises cadastrados!");
+            return new Pais();
+        }
+
+        int maiorPopulacao = this.getPaises().get(0).getPopulacao();
+        Pais paisMaiorPopulacao = this.getPaises().get(0);
+
+        for (Pais pais : paises) {
+            if(maiorPopulacao< pais.getPopulacao()){
+                maiorPopulacao = pais.getPopulacao();
+                paisMaiorPopulacao = pais;                
+            }
+        }
+        return paisMaiorPopulacao;
     }
 
     public static void main(String[] args) {
-        Continente.adicionarPais(new Pais());
-  
+        
+        Continente continente = new Continente("Ásia");
+
+        Pais paisJapao = new Pais();
+        paisJapao.setNome("Japão");
+        paisJapao.setPopulacao(126);
+        paisJapao.setDimensao(377.0);
+
+        Pais paisChina = new Pais();
+        paisChina.setNome("China");
+        paisChina.setPopulacao(1410);
+        paisChina.setDimensao(9500.0);
+        
+        continente.adicionarPais(paisJapao);
+        continente.adicionarPais(paisChina);
+
+        System.out.println(continente.populacaoContinente());
+
+        System.out.println(continente.dimensaoContinente());
+
+        System.out.println(continente.densidadePopulacional());
+
+        System.out.println(continente.paisMaiorPopulacao().getNome());
+
+
     }
 }
