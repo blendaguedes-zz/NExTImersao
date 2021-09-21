@@ -1,10 +1,17 @@
-public class ContaBancaria{
+public abstract class ContaBancaria{
 
     String numero;
     private String agencia;
     private double saldo;
-    private String nomeCliente;
-    private String cpf;
+    private Cliente cliente;
+
+    public Cliente getCliente() {
+        return this.cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
 
     public ContaBancaria(String numero, String agencia){
         this.numero = numero;
@@ -34,25 +41,10 @@ public class ContaBancaria{
         this.saldo = saldo;
     }
 
-    public String getNomeCliente() {
-        return this.nomeCliente;
-    }
-
-    public void setNomeCliente(String nomeCliente) {
-        this.nomeCliente = nomeCliente;
-    }
-
-    public String getCpf() {
-        return this.cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
 
     public static void main(String[] args) {
         
-        ContaBancaria contaBancaria = new ContaBancaria("", "");
+        // ContaBancaria contaBancaria = new ContaBancaria("", "");
     }
 
 }

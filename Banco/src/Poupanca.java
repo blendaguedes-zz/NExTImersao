@@ -15,10 +15,16 @@ public class Poupanca extends ContaBancaria{
     }
 
     public void rendimento(){
-
         double rendimento = this.getSaldo() * Poupanca.getTaxaRendimento();
         double novoSaldo = this.getSaldo() + rendimento;        
         this.setSaldo(novoSaldo);         
+    }
+
+    public void rendimentoBonus(double taxaBonus){
+        double rendimentoBonus = this.getSaldo() * taxaBonus;
+        double novoSaldo = this.getSaldo() + rendimentoBonus;
+        this.setSaldo(novoSaldo);
+
     }
 
     public void creditar(double credito){
