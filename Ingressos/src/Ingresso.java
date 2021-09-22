@@ -1,9 +1,13 @@
 public class Ingresso{
 
     private double valor;
+    private final double DESCONTO_INGRESSO = 0.1;
 
     public Ingresso(){
+    }
 
+    public double getDESCONTO_INGRESSO() {
+        return DESCONTO_INGRESSO;
     }
 
     public Ingresso(double valor){
@@ -20,7 +24,12 @@ public class Ingresso{
 
     public String toString(){
         String valoringresso = String.valueOf(this.valor); 
-        return String.valueOf(this.valor);
+        return valoringresso;
+    }
+
+    public final double valorDesconto(){
+
+        return 0;
     }
 
     public static void main(String[] args) {

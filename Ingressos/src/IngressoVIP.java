@@ -23,12 +23,22 @@ public class IngressoVIP extends Ingresso{
         this.valorAdicional = valorAdicional;
     }
 
+    @Override
     public String toString(){
 
         double valorTotal = this.getValor() + this.valorAdicional;
         String valorTotalString = Double.toString(valorTotal);
 
         return valorTotalString;
+    }
+
+    public String toString(String artista){
+
+        double valorTotal = this.getValor() + this.valorAdicional;
+        String valorTotalString = Double.toString(valorTotal);
+
+        String frase = "O show de " + artista + "custará: " + valorTotalString;
+        return frase;
     }
 
     
